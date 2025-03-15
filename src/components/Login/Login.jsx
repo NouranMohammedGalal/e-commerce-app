@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { AuthTokenContext } from "../../Context/AuthTokenContext";
 
 export default function Login() {
-  let { setToken } = useContext(AuthTokenContext);
+  let { setToken, decodeToken } = useContext(AuthTokenContext);
   let navigate = useNavigate();
   let [errmessage, setErrr] = useState(null);
   const baseUrl = "https://ecommerce.routemisr.com";
@@ -40,6 +40,7 @@ export default function Login() {
         if (req.data.message === "success") {
           setToken(req.data.token);
           localStorage.setItem("token", req.data.token);
+          decodeToken(req.data.token);
           navigate("/");
         }
       })

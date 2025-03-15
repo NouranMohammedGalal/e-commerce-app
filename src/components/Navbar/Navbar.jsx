@@ -2,8 +2,11 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import logoImage from "../../assets/images/freshcart-logo.svg";
 import { useContext } from "react";
 import { AuthTokenContext } from "../../Context/AuthTokenContext";
+import { CartContext } from "../../Context/CartContext";
 
 export default function Navbar() {
+  const { numberCartItem } = useContext(CartContext);
+  const { userData } = useContext(AuthTokenContext);
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/cart", label: "Cart" },
@@ -76,29 +79,54 @@ export default function Navbar() {
 
           <ul className="font-medium ms-auto flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white items-center">
             <li className="space-x-3">
-              <a href="" className="fa-brands fa-instagram"></a>
-              <a href="" className="fa-brands fa-facebook"></a>
-              <a href="" className="fa-brands fa-tiktok"></a>
-              <a href="" className="fa-brands fa-twitter"></a>
-              <a href="" className="fa-brands fa-youtube"></a>
+              <a className="fa-brands fa-instagram"></a>
+              <a className="fa-brands fa-facebook"></a>
+              <a className="fa-brands fa-tiktok"></a>
+              <a className="fa-brands fa-twitter"></a>
+              <a className="fa-brands fa-youtube"></a>
             </li>
             {token ? (
-              <li>
-                <button className="block py-2 px-3" onClick={logout}>
-                  SignOut
-                </button>
-              </li>
+              <>
+                <Link
+                  to="/cart"
+                  className="fa-solid fa-cart-shopping ms-3 relative"
+                >
+                  <span className="absolute top-0 right-0 translate-x-2 -translate-y-4 inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-active rounded">
+                    {numberCartItem ? numberCartItem : 0}
+                  </span>
+                </Link>
+                <li>
+                  <span className=" py-2 px-3 cursor-pointer " onClick={logout}>
+                    SignOut
+                  </span>
+                  <span className=" py-2 px-3">Hello {userData.name}</span>
+                </li>
+              </>
             ) : (
               <>
                 <li>
-                  <button className="block py-2 px-3">
-                    <Link to="/login">Login</Link>
-                  </button>
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "block py-2 px-3 text-active"
+                        : "block py-2 px-3"
+                    }
+                  >
+                    Login
+                  </NavLink>
                 </li>
                 <li>
-                  <button className="block py-2 px-3">
-                    <Link to="/register">Register</Link>
-                  </button>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "block py-2 px-3 text-active"
+                        : "block py-2 px-3"
+                    }
+                  >
+                    Register
+                  </NavLink>
                 </li>
               </>
             )}

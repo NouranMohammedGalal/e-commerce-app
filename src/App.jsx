@@ -13,6 +13,12 @@ import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
 import AuthTokenContext from "./Context/AuthTokenContext";
 import ProtectedRouting from "./ProtectedRouting/ProtectedRouting";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import CartContext from "./Context/CartContext";
+import ShippingDetails from "./components/ShippingDetails/ShippingDetails";
+import Allorders from "./components/Allorders/Allorders";
 
 function App() {
   let router = createBrowserRouter([
@@ -60,6 +66,30 @@ function App() {
             </ProtectedRouting>
           ),
         },
+        {
+          path: "productDetails/:id",
+          element: (
+            <ProtectedRouting>
+              <ProductDetails />
+            </ProtectedRouting>
+          ),
+        },
+        {
+          path: "shippingDetails/:cartId",
+          element: (
+            <ProtectedRouting>
+              <ShippingDetails />
+            </ProtectedRouting>
+          ),
+        },
+        {
+          path: "allorders",
+          element: (
+            <ProtectedRouting>
+              <Allorders />
+            </ProtectedRouting>
+          ),
+        },
         { path: "login", element: <Login /> },
         { path: "register", element: <SignUp /> },
         { path: "forgetPassword", element: <ForgetPassword /> },
@@ -68,10 +98,16 @@ function App() {
       ],
     },
   ]);
+  let client = new QueryClient();
   return (
-    <AuthTokenContext>
-      <RouterProvider router={router} />
-    </AuthTokenContext>
+    <QueryClientProvider client={client}>
+      <ReactQueryDevtools />
+      <AuthTokenContext>
+        <CartContext>
+          <RouterProvider router={router} />
+        </CartContext>
+      </AuthTokenContext>
+    </QueryClientProvider>
   );
 }
 
