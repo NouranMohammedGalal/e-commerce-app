@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
@@ -21,7 +21,7 @@ import ShippingDetails from "./components/ShippingDetails/ShippingDetails";
 import Allorders from "./components/Allorders/Allorders";
 
 function App() {
-  let router = createBrowserRouter([
+  let router = createHashRouter([
     {
       path: "/",
       element: <Layout />,

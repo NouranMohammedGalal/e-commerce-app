@@ -39,7 +39,9 @@ export default function CategorySlider() {
               alt={category.name}
               className="w-full h-48 object-fill "
             />
-            <h5> {category.name}</h5>
+            <h5 className="md:text-base text-xs hidden md:block">
+              {category.name}
+            </h5>
           </div>
         ))}
       </Slider>
