@@ -66,7 +66,7 @@ export default function ForgetPassword() {
   return (
     <>
       {displayForm ? (
-        <div className="w-7/12 mx-auto my-8">
+        <div className="w-7/12 mx-auto my-8 min-h-[48vh]">
           <h1 className="text-3xl font-medium my-4">Forget Password : </h1>
           {errmessage && (
             <div
