@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { CartContext } from "../../Context/CartContext";
 import toast, { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 export default function Product() {
   let [paginationPages, setPaginationPages] = useState("1");
@@ -11,7 +12,9 @@ export default function Product() {
 
   function getProducts() {
     return axios.get(
-      `https://ecommerce.routemisr.com/api/v1/products?limit=30&page=${paginationPages}`
+      `${
+        import.meta.env.VITE_API_BASE_URL
+      }/api/v1/products?limit=30&page=${paginationPages}`
     );
   }
 
@@ -44,6 +47,9 @@ export default function Product() {
   return (
     <>
       <Toaster />
+      <Helmet>
+        <title>Products</title>
+      </Helmet>
       {isLoading ? (
         <div className="h-screen flex justify-center items-center bg-slate-200">
           <span className="loader"></span>

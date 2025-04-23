@@ -19,6 +19,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import CartContext from "./Context/CartContext";
 import ShippingDetails from "./components/ShippingDetails/ShippingDetails";
 import Allorders from "./components/Allorders/Allorders";
+import { Offline } from "react-detect-offline";
 
 function App() {
   let router = createHashRouter([
@@ -46,7 +47,7 @@ function App() {
           path: "cart",
           element: (
             <ProtectedRouting>
-              <Cart />{" "}
+              <Cart />
             </ProtectedRouting>
           ),
         },
@@ -54,7 +55,7 @@ function App() {
           path: "brand",
           element: (
             <ProtectedRouting>
-              <Brand />{" "}
+              <Brand />
             </ProtectedRouting>
           ),
         },
@@ -100,14 +101,21 @@ function App() {
   ]);
   let client = new QueryClient();
   return (
-    <QueryClientProvider client={client}>
-      <ReactQueryDevtools />
-      <AuthTokenContext>
-        <CartContext>
-          <RouterProvider router={router} />
-        </CartContext>
-      </AuthTokenContext>
-    </QueryClientProvider>
+    <>
+      <Offline>
+        <div className="text-center text-3xl text-active">
+          You are offline right now. Check your connection.
+        </div>
+      </Offline>
+      <QueryClientProvider client={client}>
+        <ReactQueryDevtools />
+        <AuthTokenContext>
+          <CartContext>
+            <RouterProvider router={router} />
+          </CartContext>
+        </AuthTokenContext>
+      </QueryClientProvider>
+    </>
   );
 }
 

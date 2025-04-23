@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../Context/CartContext";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Cart() {
   let [cartData, setCartData] = useState(null);
@@ -70,7 +71,10 @@ export default function Cart() {
     );
   }
   return (
-    <>
+    <div className="min-h-screen">
+      <Helmet>
+        <title>Cart</title>
+      </Helmet>
       <Toaster />
       {cartData?.products?.length > 0 ? (
         <div className="w-10/12 mx-auto bg-gray-200 my-5">
@@ -152,6 +156,6 @@ export default function Cart() {
           <h2 className="text-active text-2xl px-5">Your Cart is Empty</h2>
         </div>
       )}
-    </>
+    </div>
   );
 }

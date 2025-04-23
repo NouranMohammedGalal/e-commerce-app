@@ -10,7 +10,9 @@ export default function ProductDetails() {
   let { id } = useParams();
   let { addUserCart, setNumberCartItem } = useContext(CartContext);
   function getProductDetails(id) {
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
+    return axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/products/${id}`
+    );
   }
   let { data, isLoading, isError, error, isFetching } = useQuery({
     queryKey: ["productDetails", id],
